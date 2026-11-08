@@ -1,0 +1,238 @@
+{
+  "datasetVersion": "2026-10-07",
+  "scenarios": {
+    "data": {
+      "status": "passed",
+      "startedAt": "2026-11-08T15:26:45.157787+00:00",
+      "solutionHash": "c9288b5223c601332d78e69b082f7d14d5afd1efea0ab166f6f28df30835a438",
+      "checks": [
+        "create_tables вернул две таблицы",
+        "таблица user_actions готова",
+        "таблица user_actions_none готова",
+        "partition key: user_id",
+        "clustering key event_time по убыванию",
+        "есть колонки event_type и payload",
+        "user_actions: сжатие LZ4",
+        "user_actions_none: сжатие отключено",
+        "вставлено 20 фикстур",
+        "в партиции 1001 ровно 20 событий",
+        "read_last вернул 5 строк",
+        "порядок по убыванию времени",
+        "первое - событие i=19",
+        "последнее - событие i=15",
+        "у i=19 тип purchase",
+        "у i=19 payload отражает seq=19"
+      ],
+      "artifacts": {
+        "columns": [
+          {
+            "name": "event_type",
+            "kind": "regular",
+            "clustering_order": "none",
+            "position": -1
+          },
+          {
+            "name": "payload",
+            "kind": "regular",
+            "clustering_order": "none",
+            "position": -1
+          },
+          {
+            "name": "event_time",
+            "kind": "clustering",
+            "clustering_order": "desc",
+            "position": 0
+          },
+          {
+            "name": "user_id",
+            "kind": "partition_key",
+            "clustering_order": "none",
+            "position": 0
+          }
+        ],
+        "compression": {
+          "user_actions": "{'chunk_length_in_kb': '16', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor'}",
+          "user_actions_none": "{'enabled': 'false'}"
+        },
+        "count": 20,
+        "read_last": [
+          {
+            "event_time": "2026-01-01 00:19:00",
+            "event_type": "purchase",
+            "payload": "{\"seq\": 19}"
+          },
+          {
+            "event_time": "2026-01-01 00:18:00",
+            "event_type": "login",
+            "payload": "{\"seq\": 18}"
+          },
+          {
+            "event_time": "2026-01-01 00:17:00",
+            "event_type": "view",
+            "payload": "{\"seq\": 17}"
+          },
+          {
+            "event_time": "2026-01-01 00:16:00",
+            "event_type": "purchase",
+            "payload": "{\"seq\": 16}"
+          },
+          {
+            "event_time": "2026-01-01 00:15:00",
+            "event_type": "login",
+            "payload": "{\"seq\": 15}"
+          }
+        ]
+      },
+      "skipped": 0,
+      "finishedAt": "2026-11-08T15:26:51.297169+00:00"
+    },
+    "bulk": {
+      "status": "passed",
+      "startedAt": "2026-11-08T15:27:57.867400+00:00",
+      "solutionHash": "c9288b5223c601332d78e69b082f7d14d5afd1efea0ab166f6f28df30835a438",
+      "checks": [
+        "вставлено 10 000 событий",
+        "в партиции 1001 ровно 10 000 событий",
+        "чтение 5 последних непусто",
+        "порядок по убыванию времени",
+        "user_actions_none: ровно 10 000 событий"
+      ],
+      "artifacts": {
+        "bulk": {
+          "user": 1001,
+          "n": 10000,
+          "seconds": 5.786,
+          "count": 10000,
+          "count_none": 10000
+        }
+      },
+      "skipped": 0,
+      "finishedAt": "2026-11-08T15:28:15.820838+00:00"
+    },
+    "consistency": {
+      "status": "passed",
+      "startedAt": "2026-11-08T15:29:36.225346+00:00",
+      "solutionHash": "c9288b5223c601332d78e69b082f7d14d5afd1efea0ab166f6f28df30835a438",
+      "checks": [
+        "ONE: чтение 20 строк",
+        "QUORUM: чтение 20 строк",
+        "ONE: порядок по убыванию",
+        "QUORUM: порядок по убыванию"
+      ],
+      "artifacts": {
+        "consistency": [
+          {
+            "op": "write",
+            "level": "ONE",
+            "user": 2001,
+            "count": 1000,
+            "runs": 6,
+            "seconds": 0.576,
+            "seconds_samples": [
+              0.57,
+              0.575,
+              0.576,
+              0.58,
+              0.58
+            ]
+          },
+          {
+            "op": "write",
+            "level": "QUORUM",
+            "user": 2002,
+            "count": 1000,
+            "runs": 6,
+            "seconds": 0.863,
+            "seconds_samples": [
+              0.861,
+              0.863,
+              0.863,
+              0.863,
+              0.864
+            ]
+          },
+          {
+            "op": "read",
+            "level": "ONE",
+            "user": 2001,
+            "count": 20,
+            "runs": 6,
+            "seconds": 0.002,
+            "seconds_samples": [
+              0.002,
+              0.002,
+              0.002,
+              0.002,
+              0.002
+            ]
+          },
+          {
+            "op": "read",
+            "level": "QUORUM",
+            "user": 2002,
+            "count": 20,
+            "runs": 6,
+            "seconds": 0.002,
+            "seconds_samples": [
+              0.002,
+              0.002,
+              0.002,
+              0.002,
+              0.002
+            ]
+          }
+        ]
+      },
+      "skipped": 0,
+      "finishedAt": "2026-11-08T15:29:52.258306+00:00"
+    },
+    "compaction": {
+      "status": "passed",
+      "startedAt": "2026-11-08T15:38:04.214895+00:00",
+      "solutionHash": "c9288b5223c601332d78e69b082f7d14d5afd1efea0ab166f6f28df30835a438",
+      "checks": [
+        "user_actions: TWCS",
+        "опции TWCS содержат окно (unit/size)",
+        "default_time_to_live = 2592000 (30 дней)",
+        "до истечения 5 строк",
+        "после истечения партиция пуста"
+      ],
+      "artifacts": {
+        "compaction": {
+          "options": {
+            "class": "org.apache.cassandra.db.compaction.TimeWindowCompactionStrategy",
+            "compaction_window_size": "1",
+            "compaction_window_unit": "DAYS",
+            "max_threshold": "32",
+            "min_threshold": "4"
+          },
+          "default_time_to_live": 2592000,
+          "rows_before_ttl_expiry": 5,
+          "rows_after_ttl_expiry": 0
+        }
+      },
+      "skipped": 0,
+      "finishedAt": "2026-11-08T15:38:18.618414+00:00"
+    },
+    "metrics": {
+      "status": "passed",
+      "startedAt": "2026-11-08T15:36:38.198342+00:00",
+      "solutionHash": "c9288b5223c601332d78e69b082f7d14d5afd1efea0ab166f6f28df30835a438",
+      "checks": [
+        "ops tablestats (user_actions): файл непустой",
+        "ops tablestats (user_actions): содержит метрики Bloom и размер",
+        "ops tablestats (user_actions): SSTable на диске (сначала bulk или consistency, потом bash ops.sh tablestats)",
+        "ops tablestats (user_actions_none): файл непустой",
+        "ops tablestats (user_actions_none): содержит метрики Bloom и размер",
+        "ops tablestats (user_actions_none): SSTable на диске (сначала bulk или consistency, потом bash ops.sh tablestats)",
+        "ops repair: файл непустой",
+        "ops repair: без ошибок выполнения",
+        "ops compact: файл непустой",
+        "ops compact: без ошибок выполнения"
+      ],
+      "artifacts": {},
+      "skipped": 0,
+      "finishedAt": "2026-11-08T15:36:38.222937+00:00"
+    }
+  }
+}
